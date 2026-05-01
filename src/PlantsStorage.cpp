@@ -57,16 +57,20 @@ void addPlant(plants plant, vector<vector<plants>> &plantStorage)
     plantStorage[plant.healthLevel].push_back(plant);
 }
 
-
-void updateplantHealth(){
-    // this function will also update the plants position in the storage vector if their health level changes.  
-
-}
-
 void removePlant(int plantIndex, int healthLevel, vector<vector<plants>> &plantStorage){
     // this function will remove the plant from the storage vector. 
 
 }
+
+void updateplantHealth(int newhealth, int plantIndex, int oldHealthLevel, vector<vector<plants>> &plantStorage){
+    // this function will also update the plants position in the storage vector if their health level changes.  
+
+    plantStorage[oldHealthLevel][plantIndex].updateHealthLevel(newhealth);
+    
+
+
+}
+
 
 
 
