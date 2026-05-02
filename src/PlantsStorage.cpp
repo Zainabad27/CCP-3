@@ -21,7 +21,7 @@ struct plants
         this->sunlightNeed = sunlightNeed;
         this->name = name;
         this->waterNeed = waterNeed;
-        if (healthLevel < 0 || healthLevel > PLANTS_HEALTH_LEVELS)
+        if (healthLevel < 0 || healthLevel > PLANTS_HEALTH_LEVELS-1)
         {
             this->healthLevel = 9; // default health level
         }
@@ -33,7 +33,7 @@ struct plants
 
     void updateHealthLevel(int level)
     {
-        if (level < 0 || level > PLANTS_HEALTH_LEVELS)
+        if (level < 0 || level > PLANTS_HEALTH_LEVELS-1)
         {
             cout << "Invalid health level. It should be between 0 and " << PLANTS_HEALTH_LEVELS << ".\n";
             return;
@@ -119,7 +119,7 @@ void processPlantModule(vector<vector<plants>> &plantStorage)
         case 4:
         {
             cout << "Updating all plants one by one.\n";
-            for (size_t i = 0; i < 10; i++)
+            for (size_t i = 0; i < PLANTS_HEALTH_LEVELS; i++)
             {
                 for (size_t j = 0; j < plantStorage[i].size(); j++)
                 {
@@ -129,7 +129,7 @@ void processPlantModule(vector<vector<plants>> &plantStorage)
                     if (choice == 'x' || choice == 'X')
                     {
                         cout << "Exiting plant health update process.\n";
-                        return;
+                        break;
                     }
                     if (choice == 'y' || choice == 'Y')
                     {
