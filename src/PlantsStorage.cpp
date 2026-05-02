@@ -3,45 +3,14 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include "PlantStorage.h"
 using namespace std;
-#define PLANTS_HEALTH_LEVELS 10
+// #define PLANTS_HEALTH_LEVELS 10
 
 // we basically have to write four main funcs here which are
 // show plants, add plant, remove plant and update plant health.
 
-struct plants
-{
-    string name;
-    int healthLevel;
-    int waterNeed;
-    string sunlightNeed;
 
-    plants(string name, string sunlightNeed, int waterNeed, int healthLevel = 9)
-    {
-        this->sunlightNeed = sunlightNeed;
-        this->name = name;
-        this->waterNeed = waterNeed;
-        if (healthLevel < 0 || healthLevel > PLANTS_HEALTH_LEVELS-1)
-        {
-            this->healthLevel = 9; // default health level
-        }
-        else
-        {
-            this->healthLevel = healthLevel;
-        }
-    }
-
-    void updateHealthLevel(int level)
-    {
-        if (level < 0 || level > PLANTS_HEALTH_LEVELS-1)
-        {
-            cout << "Invalid health level. It should be between 0 and " << PLANTS_HEALTH_LEVELS << ".\n";
-            return;
-        }
-
-        this->healthLevel = level;
-    }
-};
 
 void showPlants(vector<vector<plants>> plantStorage, int healthLevel)
 {
