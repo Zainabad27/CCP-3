@@ -5,7 +5,6 @@
 #include <vector>
 #define PLANTS_HEALTH_LEVELS 10
 
-
 struct plants
 {
     std::string name;
@@ -41,4 +40,4 @@ struct plants
 };
 void processPlantModule(std::vector<std::vector<plants>> &plantStorage);
 
-#endif
+#endif // PLANTSTORAGE_H

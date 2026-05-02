@@ -118,9 +118,9 @@ void processPlantModule(vector<vector<plants>> &plantStorage)
     } while (input != 0);
 }
 
-int main()
-{
-    vector<vector<plants>> plantStorage(PLANTS_HEALTH_LEVELS);
+// int main() 
+// {
+//     vector<vector<plants>> plantStorage(PLANTS_HEALTH_LEVELS);
 
-    processPlantModule(plantStorage);
-}
+//     processPlantModule(plantStorage);
+// }
