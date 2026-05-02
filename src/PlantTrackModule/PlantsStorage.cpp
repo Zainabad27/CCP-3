@@ -10,17 +10,17 @@ using namespace std;
 // we basically have to write four main funcs here which are
 // show plants, add plant, remove plant and update plant health.
 
-
-
 void showPlants(vector<vector<plants>> plantStorage, int healthLevel)
 {
     if (plantStorage[healthLevel].size() == 0)
-        {
-            cout<<"no plants with this health level in the database curently.\n";return;}
+    {
+        cout << "no plants with health level " << healthLevel << " in the database curently.\n";
+        return;
+    }
     cout << "Plants with health level " << healthLevel << ":\n";
     for (int i = 0; i < plantStorage[healthLevel].size(); i++)
     {
-        cout << "Name: " << plantStorage[healthLevel][i].name << ", Water Need: " << plantStorage[healthLevel][i].waterNeed << ", Sunlight Need: " << plantStorage[healthLevel][i].sunlightNeed << endl;
+        cout << "Name: " << plantStorage[healthLevel][i].name << ", Water Need(mL): " << plantStorage[healthLevel][i].waterNeed << ", Sunlight Need (Hours/Day): " << plantStorage[healthLevel][i].sunlightNeed << endl;
     }
 }
 void addPlant(plants plant, vector<vector<plants>> &plantStorage)
@@ -44,6 +44,7 @@ void updateplantHealth(int newhealth, int plantIndex, int oldHealthLevel, vector
     plantStorage[newhealth].push_back(plantStorage[oldHealthLevel][plantIndex]);
 
     swap(plantStorage[oldHealthLevel][plantIndex], plantStorage[oldHealthLevel][(plantStorage[oldHealthLevel]).size() - 1]);
+    plantStorage[oldHealthLevel].pop_back();
 }
 
 void processPlantModule(vector<vector<plants>> &plantStorage)
@@ -52,9 +53,9 @@ void processPlantModule(vector<vector<plants>> &plantStorage)
     do
     {
         string name, sunlightNeed;
-            int waterNeed, healthLevel;
-             int plantIndex;
-        cout << "1. Show Plants\n2. Add Plant\n3. Remove Plant\n4. Update Plant Health\n0. Exit\n";
+        int waterNeed, healthLevel;
+        int plantIndex;
+        cout << "1. Show Plants\n2. Add Plant\n3. Remove Plant\n4. Update Plant Health\n5. Show All Plants\n0. Exit\n";
         cin >> input;
         switch (input)
         {
@@ -66,19 +67,19 @@ void processPlantModule(vector<vector<plants>> &plantStorage)
             break;
         case 2:
             name, sunlightNeed;
-             waterNeed, healthLevel;
+            waterNeed, healthLevel;
             cout << "Enter plant name: ";
             cin >> name;
-            cout << "Enter sunlight need: ";
+            cout << "Enter sunlight need(Hours/Day): ";
             cin >> sunlightNeed;
-            cout << "Enter water need: ";
+            cout << "Enter water need(mL): ";
             cin >> waterNeed;
             cout << "Enter health level (0-9): ";
             cin >> healthLevel;
             addPlant(plants(name, sunlightNeed, waterNeed, healthLevel), plantStorage);
             break;
         case 3:
-             plantIndex, healthLevel;
+            plantIndex, healthLevel;
             cout << "Enter health level of the plant to remove: ";
             cin >> healthLevel;
             cout << "Enter index of the plant to remove: ";
@@ -111,6 +112,15 @@ void processPlantModule(vector<vector<plants>> &plantStorage)
                 }
             }
         }
+        case 5:
+        {
+            cout << "Showing all plants in the database:\n";
+            for (size_t i = 0; i < PLANTS_HEALTH_LEVELS; i++)
+            {
+                showPlants(plantStorage, i);
+            }
+            break;
+        }
         case 0:
             cout << "Exiting Plant Module.\n";
             break;
@@ -118,7 +128,7 @@ void processPlantModule(vector<vector<plants>> &plantStorage)
     } while (input != 0);
 }
 
-// int main() 
+// int main()
 // {
 //     vector<vector<plants>> plantStorage(PLANTS_HEALTH_LEVELS);
 
