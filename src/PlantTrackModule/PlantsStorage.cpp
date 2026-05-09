@@ -22,7 +22,7 @@ void showPlants(vector<vector<plants>> plantStorage, int healthLevel)
     cout << "Plants with health level " << healthLevel << ":\n";
     for (int i = 0; i < plantStorage[healthLevel].size(); i++)
     {
-        cout << "Name: " << plantStorage[healthLevel][i].name << ", Water Need(mL): " << plantStorage[healthLevel][i].waterNeed << ", Sunlight Need (Hours/Day): " << plantStorage[healthLevel][i].sunlightNeed << endl;
+        cout << "Name: " << plantStorage[healthLevel][i].name << ", Water Need(mL): " << plantStorage[healthLevel][i].waterNeed << ", Sunlight Need (Hours/Day): " << plantStorage[healthLevel][i].sunlightNeed <<" Index: "<<i<< "\n\n\n";
     }
 }
 void addPlant(plants plant, vector<vector<plants>> &plantStorage)
@@ -63,14 +63,14 @@ void processPlantModule(vector<vector<plants>> &plantStorage)
         {
         case 1:
             int healthLevel;
-            cout << "Enter health level to show plants: ";
+            cout << "Enter health level to show flowers: ";
             cin >> healthLevel;
             showPlants(plantStorage, healthLevel);
             break;
         case 2:
             name, sunlightNeed;
             waterNeed, healthLevel;
-            cout << "Enter plant name: ";
+            cout << "Enter flower name: ";
             cin >> name;
             cout << "Enter sunlight need(Hours/Day): ";
             cin >> sunlightNeed;
@@ -130,9 +130,9 @@ void processPlantModule(vector<vector<plants>> &plantStorage)
     } while (input != 0);
 }
 
-// int main()
-// {
-//     vector<vector<plants>> plantStorage(PLANTS_HEALTH_LEVELS);
+int main()
+{
+    vector<vector<plants>> plantStorage(PLANTS_HEALTH_LEVELS);
 
-//     processPlantModule(plantStorage);
-// }
+    processPlantModule(plantStorage);
+}
