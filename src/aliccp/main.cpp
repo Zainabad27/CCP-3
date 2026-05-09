@@ -64,6 +64,7 @@ void updatePlantHealth(int Oldhealthlevel, unordered_map<int, vector<plant>> &st
         store[newhealth].push_back(store[Oldhealthlevel][index]);
 
         store[Oldhealthlevel].erase(store[Oldhealthlevel].begin()+index);
+        cout<<"Plant health updated successfully.\n\n\n";
 }
 void waterPlants(int healthlevel, unordered_map<int, vector<plant>> &store){
      if (healthlevel < 0 || healthlevel > MAX_Health)
@@ -143,6 +144,7 @@ void processplantmodule(){
                 cout << "water need: " << plants[i].waterlevel << "\n";
                 cout << "Health status: " << plants[i].currenthealth << "\n";
                 cout<<"Plant Index: " << i << "\n";
+                cout<<"\n\n";
             }
             break;
         }
