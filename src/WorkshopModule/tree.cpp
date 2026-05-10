@@ -2,11 +2,8 @@
 #include <iostream>
 #include <string>
 
-
-
-
 #include "Tree.h"
-// using namespace std;
+
 
 AVLNode::AVLNode(registration reg)
     : data(reg), left(nullptr), right(nullptr), height(1) {}

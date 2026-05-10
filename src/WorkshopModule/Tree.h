@@ -1,4 +1,4 @@
-#pragma once  // prevents double-inclusion
+#pragma once  
 #include <string>
 
 struct registration {
@@ -16,7 +16,7 @@ public:
     AVLNode* right;
     int height;
 
-    AVLNode(registration reg);  // just the signature, no body
+    AVLNode(registration reg);  
 };
 
 class AVLTree {
