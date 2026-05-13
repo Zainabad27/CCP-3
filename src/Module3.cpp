@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
+#include "Module3.h"
 using namespace std;
 
 #define MAX_Budget 10
@@ -15,6 +16,7 @@ struct tool
 void calculateMaxBenifit(vector<tool> &tools)
 {
     tools.insert(tools.begin(), tool{});
+
     int lastCol, lastRow;
 
     int arr[MAX_Budget + 1][tools.size() + 1];
@@ -30,49 +32,15 @@ void calculateMaxBenifit(vector<tool> &tools)
             else if (tools[currentRow].price <= currentBudget)
             {
                 arr[currentRow][currentBudget] = max(arr[currentRow - 1][currentBudget], tools[currentRow].benifit + arr[currentRow - 1][currentBudget - tools[currentRow].price]);
+                // max(num1,num2)
             }
 
             else
             {
                 arr[currentRow][currentBudget] = arr[currentRow - 1][currentBudget];
             }
-            lastCol = currentBudget;
         }
-        lastRow = currentRow;
     }
-
-    // calculating which tools are present in the benifit score.
-    // bool itemsFound = false;
-
-    // int tool1 = 0, tool2 = 0;
-
-    // while (!itemsFound)
-    // {
-    //     if (arr[lastRow][lastCol] == arr[lastRow - 1][lastCol])
-    //     {
-    //         lastRow--;
-    //         continue;
-    //     }
-    //     if (arr[lastRow][lastCol] != arr[lastRow - 1][lastCol])
-    //     {
-    //         if (tool1)
-    //         {
-    //             tool2 = lastRow;
-    //             itemsFound = true;
-    //         };
-    //         tool1 = lastRow;
-    //         int ValueTobeFoundInUpperRow = arr[lastRow][lastCol] - tools[tool1].benifit;
-
-    //         lastRow--;
-
-    //         // have to update lastcol value in the upper row in which tool one was found.
-
-    //         while (arr[lastRow][lastCol] != ValueTobeFoundInUpperRow)
-    //         {
-    //             lastCol--;
-    //         }
-    //     }
-    // }
 
     int w = MAX_Budget;
     int n = tools.size() - 1;
@@ -87,8 +55,9 @@ void calculateMaxBenifit(vector<tool> &tools)
     }
 }
 
-void processModule3()
+void Module3()
 {
+    system("clear");
     vector<tool> tools;
     int choice;
 
@@ -149,10 +118,4 @@ void processModule3()
         }
 
     } while (choice != 3);
-}
-
-int main()
-{
-    processModule3();
-    return 0;
 }

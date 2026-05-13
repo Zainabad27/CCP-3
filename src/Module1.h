@@ -38,6 +38,6 @@ struct plants
         this->healthLevel = level;
     }
 };
-void processPlantModule(std::vector<std::vector<plants>> &plantStorage);
+void Module1();
 
 #endif // PLANTSTORAGE_H

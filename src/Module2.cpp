@@ -2,6 +2,7 @@
 #include <unordered_map>
 #include <string>
 #include "Tree.h"
+#include "Module2.h"    
 using namespace std;
 
 struct workshop
@@ -130,8 +131,9 @@ void GetAllRegistrationsForWorkshop(unordered_map<string, AVLTree> &workshopRegi
     workshopRegistrations[workshopName].printInorder();
 }
 
-void processWorkshopModule()
+void Module2()
 {
+       system("clear");  
     unordered_map<string, workshop> workshops;
     unordered_map<string, AVLTree> workshopRegistrations;
 
@@ -227,9 +229,3 @@ void processWorkshopModule()
     } while (input != 0);
 }
 
-int main()
-{
-    processWorkshopModule();
-
-    return 0;
-}

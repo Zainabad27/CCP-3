@@ -1,11 +1,9 @@
 // the module that keep the track of all the plants and their data and condition.
 
-
-
 #include <iostream>
 #include <string>
 #include <vector>
-#include "PlantStorage.h"
+#include "Module1.h"
 using namespace std;
 // #define PLANTS_HEALTH_LEVELS 10
 
@@ -22,7 +20,7 @@ void showPlants(vector<vector<plants>> plantStorage, int healthLevel)
     cout << "Plants with health level " << healthLevel << ":\n";
     for (int i = 0; i < plantStorage[healthLevel].size(); i++)
     {
-        cout << "Name: " << plantStorage[healthLevel][i].name << ", Water Need(mL): " << plantStorage[healthLevel][i].waterNeed << ", Sunlight Need (Hours/Day): " << plantStorage[healthLevel][i].sunlightNeed <<" Index: "<<i<< "\n\n\n";
+        cout << "Name: " << plantStorage[healthLevel][i].name << ", Water Need(mL): " << plantStorage[healthLevel][i].waterNeed << ", Sunlight Need (Hours/Day): " << plantStorage[healthLevel][i].sunlightNeed << " Index: " << i << "\n\n\n";
     }
 }
 void addPlant(plants plant, vector<vector<plants>> &plantStorage)
@@ -49,8 +47,10 @@ void updateplantHealth(int newhealth, int plantIndex, int oldHealthLevel, vector
     plantStorage[oldHealthLevel].pop_back();
 }
 
-void processPlantModule(vector<vector<plants>> &plantStorage)
+void Module1()
 {
+    system("clear");  
+    vector<vector<plants>> plantStorage(10); // Assuming 10 health levels
     int input;
     do
     {
@@ -128,11 +128,4 @@ void processPlantModule(vector<vector<plants>> &plantStorage)
             break;
         }
     } while (input != 0);
-}
-
-int main()
-{
-    vector<vector<plants>> plantStorage(PLANTS_HEALTH_LEVELS);
-
-    processPlantModule(plantStorage);
 }
