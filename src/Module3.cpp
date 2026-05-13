@@ -15,11 +15,8 @@ struct tool
 
 void calculateMaxBenifit(vector<tool> &tools)
 {
-    tools.insert(tools.begin(), tool{});
-
-    int lastCol, lastRow;
-
-    int arr[MAX_Budget + 1][tools.size() + 1];
+    // int arr[MAX_Budget + 1][tools.size() + 1];
+    int arr[tools.size()][MAX_Budget + 1];
 
     for (int currentRow = 0; currentRow < tools.size(); currentRow++)
     {
@@ -53,6 +50,8 @@ void calculateMaxBenifit(vector<tool> &tools)
             w -= tools[row].price;
         }
     }
+
+    cout << "Maximum benefit: " << arr[n][MAX_Budget] << "\n";  
 }
 
 void Module3()
@@ -63,7 +62,7 @@ void Module3()
 
     do
     {
-         system("clear");  
+        //  system("clear");  
         cout << "\n=== Tool Benefit Calculator ===\n";
         cout << "1. Enter tools\n";
         cout << "2. Calculate max benefit\n";
@@ -80,7 +79,8 @@ void Module3()
             cin >> n;
 
             tools.clear();
-            // tools.emplace(tools.begin(), Tool{});  // your dummy padding
+      
+            tools.push_back(tool{});
 
             for (int i = 1; i <= n; i++)
             {
@@ -101,7 +101,7 @@ void Module3()
 
         case 2:
         {
-            if (tools.size() <= 0)
+            if (tools.size() <= 1)
             { // only dummy element present
                 cout << "Please enter tools first!\n";
                 break;

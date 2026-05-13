@@ -88,7 +88,7 @@ void Module1()
     int input;
     do
     {
-         system("clear");  
+        //  system("clear");  
         string name, sunlightNeed;
         int waterNeed, healthLevel;
         int plantIndex;
