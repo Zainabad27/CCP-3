@@ -29,12 +29,16 @@ private:
     AVLNode* leftRotate(AVLNode* x);
     AVLNode* insert(AVLNode* node, registration reg);
     AVLNode* minValueNode(AVLNode* node);
+    AVLNode* maxValueNode(AVLNode* node);
     AVLNode* deleteNode(AVLNode* root, int regID);
     void inorder(AVLNode* root);
     AVLNode* search(AVLNode* root, int regID);
 
 public:
     AVLTree();
+    AVLNode* rootNode() { return root; }
+    int GetNodeCount(AVLNode* node);  
+    int GetMaxNodeID(AVLNode* node);      
     void insert(registration reg);
     void remove(int regID);
     registration* search(int regID);

@@ -9,7 +9,16 @@ AVLNode::AVLNode(registration reg)
     : data(reg), left(nullptr), right(nullptr), height(1) {}
 
 AVLTree::AVLTree() : root(nullptr) {}
+int AVLTree::GetNodeCount(AVLNode* node) {
+    if (node == nullptr) return 0;
+    return 1 + GetNodeCount(node->left) + GetNodeCount(node->right);
+}
 
+int AVLTree::GetMaxNodeID(AVLNode* node) {
+    if (node == nullptr) return 0;
+    return maxValueNode(node)->data.regID; // Get the max regID in the tree
+
+}
 int AVLTree::height(AVLNode *node)
 {
     if (node == nullptr)
@@ -102,6 +111,14 @@ AVLNode *AVLTree::minValueNode(AVLNode *node)
     AVLNode *current = node;
     while (current->left != nullptr)
         current = current->left;
+    return current;
+}
+
+AVLNode *AVLTree::maxValueNode(AVLNode *node)
+{
+    AVLNode *current = node;
+    while (current->right != nullptr)
+        current = current->right;
     return current;
 }
 

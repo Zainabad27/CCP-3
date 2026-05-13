@@ -2,7 +2,7 @@
 #include <unordered_map>
 #include <string>
 #include "Tree.h"
-#include "Module2.h"    
+#include "Module2.h"
 using namespace std;
 
 struct workshop
@@ -13,11 +13,17 @@ struct workshop
     int slots;
 };
 
-void addAWorkshop(unordered_map<string, workshop> &workshops,unordered_map<string, AVLTree> workshopRegistrations, string workshopName,workshop w)
+void addAWorkshop(unordered_map<string, workshop> &workshops, unordered_map<string, AVLTree> workshopRegistrations, string workshopName, workshop w)
 {
+    if (workshops.find(workshopName) != workshops.end())
+    {
+        cout << "Workshop already exists with this name.\n";
+        return;
+    }
     workshops[workshopName] = w;
     workshopRegistrations[workshopName] = AVLTree();
 
+       cout << "Workshop added successfully.\n";
 }
 
 void bookSeat(unordered_map<string, workshop> &workshops, string workshopName, registration regis, unordered_map<string, AVLTree> &workshopRegistrations)
@@ -46,12 +52,12 @@ void bookSeat(unordered_map<string, workshop> &workshops, string workshopName, r
 
     if (workshopRegistrations[workshopName].search(regis.regID) != nullptr)
     {
-        cout << "Registration ID already exists for this workshop.\n";
+        cout << "Registration ID already exists for this workshop. wompwomp\n";
         cout << "Please choose a different ID.\n";
         return;
     }
     workshopRegistrations[workshopName].insert(regis);
-    cout << "Seats booked successfully for " << regis.cusName << " in " << workshopName << ".\n";
+    cout << "Seats booked successfully for " << regis.cusName << "(" << regis.regID << ")" << " in " << workshopName << ".\n";
 }
 
 void RemoveWorkshopAndRegistrations(unordered_map<string, workshop> &workshops, unordered_map<string, AVLTree> &workshopRegistrations, string workshopName)
@@ -104,8 +110,7 @@ bool IsworkshopFullOrCancalled(unordered_map<string, workshop> &workshops, strin
     if (workshops.find(workshopName) == workshops.end())
     {
         cout << "Workshop not found.\n";
-        return true; // cancalled 
-
+        return true; // cancalled or never existed.
     }
 
     if (workshops[workshopName].slots <= 0)
@@ -114,7 +119,7 @@ bool IsworkshopFullOrCancalled(unordered_map<string, workshop> &workshops, strin
         return true;
     }
 
-    cout << "Workshop is not full. Available slots: " << workshops[workshopName].slots << "\n";
+    cout << "Available slots: " << workshops[workshopName].slots << "\n";
     return false;
 }
 
@@ -127,13 +132,56 @@ void GetAllRegistrationsForWorkshop(unordered_map<string, AVLTree> &workshopRegi
     }
 
     cout << "Registrations for " << workshopName << ":\n";
-    cout << "Printing the registrations queue: \n";
+    cout << "Printing the registrations queue: \n\n\n";
     workshopRegistrations[workshopName].printInorder();
+}
+
+void cancelRegistration(unordered_map<string, workshop> &workshops, string workshopName, int regID, unordered_map<string, AVLTree> &workshopRegistrations)
+{
+    if (workshopRegistrations.find(workshopName) == workshopRegistrations.end())
+    {
+        cout << "Workshop not found.\n";
+        return;
+    }
+
+    registration *reg = workshopRegistrations[workshopName].search(regID);
+    if (reg != nullptr)
+    {
+        workshops[workshopName].slots += reg->seatsBooked; // free up the slots
+        workshopRegistrations[workshopName].remove(regID); // remove the registration
+        cout << "Registration cancelled successfully.\n";
+    }
+    else
+    {
+        cout << "Registration not found.\n";
+    }
+}
+
+void displayAllWorkshops(unordered_map<string, workshop> &workshops)
+{
+    if (workshops.empty())
+    {
+        cout << "No workshops available.\n";
+        return;
+    }
+
+    cout << "Available Workshops:\n";
+    for (const auto &entry : workshops)
+    {
+        const string &name = entry.first;
+        const workshop &w = entry.second;
+        cout << "Workshop Name: " << name
+             << " | Gardener: " << w.GardenerName
+             << " | Expertise: " << w.GardenerExpertise
+             << " | Date: " << w.date
+             << " | Available Slots: " << w.slots
+             << "\n\n";
+    }
 }
 
 void Module2()
 {
-       system("clear");  
+    system("clear");
     unordered_map<string, workshop> workshops;
     unordered_map<string, AVLTree> workshopRegistrations;
 
@@ -141,7 +189,8 @@ void Module2()
     int input;
     do
     {
-        cout << "1. Add a workshop\n2. Book a slot\n3. Remove a workshop and its registrations\n4. Verify a registration\n5. Get all registrations for a workshop\n0. Exit\n";
+        //  system("clear");
+        cout << "1. Add a workshop\n2. Book a slot\n3. Remove a workshop and its registrations\n4. Verify a registration\n5. Get all registrations for a workshop\n6. Cancel a registration\n7. Display all workshops\n0. Exit\n";
         cin >> input;
         switch (input)
         {
@@ -161,8 +210,8 @@ void Module2()
                 cout << "Enter available slots: ";
                 cin >> w.slots;
 
-                addAWorkshop(workshops, workshopRegistrations, workshopName,w);
-                cout << "Workshop added successfully.\n";
+                addAWorkshop(workshops, workshopRegistrations, workshopName, w);
+             
             }
             break;
         case 2:
@@ -175,8 +224,12 @@ void Module2()
 
                 if (!IsworkshopFullOrCancalled(workshops, workshopName))
                 {
-                    cout << "Enter registration ID: ";
-                    cin >> reg.regID;
+                    // cout << "Enter registration ID: ";
+                    // cin >> reg.regID;
+
+                    // auto incremented ID
+                    reg.regID = workshopRegistrations[workshopName].GetMaxNodeID(workshopRegistrations[workshopName].rootNode()) + 1;
+
                     cout << "Enter customer name: ";
                     cin >> reg.cusName;
                     reg.workshopName = workshopName;
@@ -220,6 +273,22 @@ void Module2()
                 GetAllRegistrationsForWorkshop(workshopRegistrations, workshopName);
             }
             break;
+        case 6:
+            // Cancel a registration
+            {
+                string workshopName;
+                int regID;
+                cout << "Enter workshop name: ";
+                cin >> workshopName;
+                cout << "Enter registration ID: ";
+                cin >> regID;
+                cancelRegistration(workshops, workshopName, regID, workshopRegistrations);
+            }
+            break;
+        case 7:
+            // Display all workshops
+            displayAllWorkshops(workshops);
+            break;
 
         default:
             cout << "Invalid input. Please try again.\n";
@@ -228,4 +297,3 @@ void Module2()
 
     } while (input != 0);
 }
-

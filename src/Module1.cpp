@@ -9,12 +9,31 @@ using namespace std;
 
 // we basically have to write four main funcs here which are
 // show plants, add plant, remove plant and update plant health.
+void waterPlants(vector<vector<plants>> &plantStorage)
+{
+    for (size_t i = 0; i < PLANTS_HEALTH_LEVELS; i++)
+    {
+        for (size_t j = 0; j < plantStorage[i].size(); j++)
+        {
+            if (plantStorage[i][j].waterNeed <= 0)
+            {
+                cout << "Plant " << plantStorage[i][j].name << " does not need water currently.\n\n";    
+                plantStorage[i][j].waterNeed = 0;
+            }
+            else
+            {
+                plantStorage[i][j].waterNeed -= plantStorage[i][j].waterNeed;
+            }
+        }
+    }
 
+    cout << "Plants watered successfully. All water needs have been updated.\n";
+}
 void showPlants(vector<vector<plants>> plantStorage, int healthLevel)
 {
     if (plantStorage[healthLevel].size() == 0)
     {
-        cout << "no plants with health level " << healthLevel << " in the database curently.\n";
+        // cout << "no plants with health level " << healthLevel << " in the database curently.\n";
         return;
     }
     cout << "Plants with health level " << healthLevel << ":\n";
@@ -25,11 +44,21 @@ void showPlants(vector<vector<plants>> plantStorage, int healthLevel)
 }
 void addPlant(plants plant, vector<vector<plants>> &plantStorage)
 {
+    if(plant.healthLevel < 0 || plant.healthLevel > PLANTS_HEALTH_LEVELS-1)
+    {
+        cout << "Invalid health level. It should be between 0 and " << PLANTS_HEALTH_LEVELS-1 << ".\n";
+        return;
+    }
     plantStorage[plant.healthLevel].push_back(plant);
 }
 
 void removePlant(int plantIndex, int healthLevel, vector<vector<plants>> &plantStorage)
 {
+      if((healthLevel < 0 || healthLevel > PLANTS_HEALTH_LEVELS-1))
+    {
+        cout << "Invalid health level. It should be between 0 and " << PLANTS_HEALTH_LEVELS-1 << ".\n";
+        return;
+    }
     // this function will remove the plant from the storage vector.
 
     swap(plantStorage[healthLevel][plantIndex], plantStorage[healthLevel][(plantStorage[healthLevel]).size() - 1]);
@@ -38,6 +67,11 @@ void removePlant(int plantIndex, int healthLevel, vector<vector<plants>> &plantS
 
 void updateplantHealth(int newhealth, int plantIndex, int oldHealthLevel, vector<vector<plants>> &plantStorage)
 {
+    if((oldHealthLevel < 0 || oldHealthLevel > PLANTS_HEALTH_LEVELS-1) ||(newhealth < 0 || newhealth > PLANTS_HEALTH_LEVELS-1))
+    {
+        cout << "Invalid health level. It should be between 0 and " << PLANTS_HEALTH_LEVELS-1 << ".\n";
+        return;
+    }
     // this function will also update the plants position in the storage vector if their health level changes.
 
     plantStorage[oldHealthLevel][plantIndex].updateHealthLevel(newhealth);
@@ -49,15 +83,16 @@ void updateplantHealth(int newhealth, int plantIndex, int oldHealthLevel, vector
 
 void Module1()
 {
-    system("clear");  
+    system("clear");
     vector<vector<plants>> plantStorage(10); // Assuming 10 health levels
     int input;
     do
     {
+         system("clear");  
         string name, sunlightNeed;
         int waterNeed, healthLevel;
         int plantIndex;
-        cout << "1. Show Plants\n2. Add Plant\n3. Remove Plant\n4. Update Plant Health\n5. Show All Plants\n0. Exit\n";
+        cout << "1. Show Plants\n2. Add Plant\n3. Remove Plant\n4. Update Plant Health\n5. Show All Plants\n6. Water Plants\n0. Exit\n";
         cin >> input;
         switch (input)
         {
@@ -108,6 +143,7 @@ void Module1()
                         int newHealth;
                         cout << "Enter new health level (0-9): ";
                         cin >> newHealth;
+
                         updateplantHealth(newHealth, j, i, plantStorage);
                         cout << "Plant health updated successfully.\n";
                     }
@@ -123,8 +159,14 @@ void Module1()
             }
             break;
         }
+        case 6:
+            waterPlants(plantStorage);
+            break;
         case 0:
             cout << "Exiting Plant Module.\n";
+            break;
+        default:    
+            cout << "Invalid input. Please try again.\n";
             break;
         }
     } while (input != 0);

@@ -63,6 +63,7 @@ void Module3()
 
     do
     {
+         system("clear");  
         cout << "\n=== Tool Benefit Calculator ===\n";
         cout << "1. Enter tools\n";
         cout << "2. Calculate max benefit\n";
